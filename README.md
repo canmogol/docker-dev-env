@@ -22,6 +22,9 @@ Docker image for a basic development environment
 
 `docker port devenv 22`
 
+this command should reveal the IP:PORT which you can connect using ssh. ex: 0.0.0.0:32774
+
 * Login 
 
+You may login to the 'devenv' container using its IP and PORT, also username and password both are 'can'
 `ssh can@0.0.0.0 -p 32772`
