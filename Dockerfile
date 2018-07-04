@@ -20,21 +20,6 @@ RUN echo "export HISTSIZE=10000" >> /etc/profile
 RUN echo "export VISUAL=vim" >> /etc/profile
 RUN echo "export EDITOR=\"$VISUAL\"" >> /etc/profile
 RUN echo "source /etc/bash_completion" >> /etc/profile
-RUN echo $'reset=$(tput sgr0)\n\
-bold=$(tput bold)\n\
-black=$(tput setaf 0)\n\
-red=$(tput setaf 1)\n\
-green=$(tput setaf 2)\n\
-yellow=$(tput setaf 3)\n\
-blue=$(tput setaf 4)\n\
-magenta=$(tput setaf 5)\n\
-cyan=$(tput setaf 6)\n\
-white=$(tput setaf 7)\n\
-user_color=$green\n\
-[ "$UID" -eq 0 ] && { user_color=$red; }\n\
-PS1="\[\e]0;\w\a\]\[$reset\][\[$blue\]\t\[$reset\]]\[$user_color\]\u@\H(\l)\\[$white\]:\[$cyan\]\w\[$reset\][\[$yellow\]\$?\[$reset\]]\[$white\]\\[$reset\]\$\n\[$red\]→\[$reset\] "\n'\
->> /etc/profile
-RUN echo "" >> /etc/profile
 RUN echo "byobu new-session" >> /etc/profile
 RUN useradd -ms /bin/bash can
 RUN echo 'can:can' | chpasswd
@@ -46,6 +31,8 @@ RUN echo "devenv" > /etc/hostname
 RUN mkdir -p /home/can/.vim/autoload /home/can/.vim/bundle && curl -LSso /home/can/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 COPY bundle.rb /home/can/.vim/
 COPY .vimrc /home/can/
+COPY .bash_ps1 /home/can/
+RUN echo "source /home/can/.bash_ps1" >> /home/can/.bashrc
 RUN chmod 755 /home/can/.vim/bundle.rb
 RUN chown can:can -R /home/can
 RUN cd /home/can/.vim; ./bundle.rb
