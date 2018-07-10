@@ -16,7 +16,7 @@ Docker image for a basic development environment
 
 * Run an instance 
 
-`docker container run --name devenv -d -P canmogol/devenv`
+`docker container run --name devenv --hostname "devenv" -d -P canmogol/devenv`
 
 * Find the ssh port
 
